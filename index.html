@@ -1,93 +1,247 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#111827">
-  <title>Galeri Foto Bersama</title>
-  <style>
-    :root{color-scheme:dark;--bg:#0b1120;--panel:#121c2e;--line:#26344b;--text:#f3f6fc;--muted:#9eacc2;--accent:#7c9cff}
-    *{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#111b31 0%,var(--bg) 48%);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
-    .wrap{max-width:1050px;margin:auto;padding:28px 16px 56px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:#24365c;display:grid;place-items:center;font-size:23px}.eyebrow{color:#a8b9d6;font-size:12px;letter-spacing:.12em;text-transform:uppercase}.title{font-size:clamp(24px,5vw,36px);font-weight:800;letter-spacing:-.04em;margin:2px 0}.count{color:var(--muted);font-size:13px;white-space:nowrap}
-    .panel{background:rgba(18,28,46,.94);border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:24px;box-shadow:0 12px 32px #0002}.panel h2{font-size:17px;margin:0 0 5px}.sub{color:var(--muted);font-size:14px;margin:0 0 16px}.drop{display:block;border:1.5px dashed #425779;border-radius:15px;padding:24px 14px;text-align:center;background:#0d1729;cursor:pointer}.drop strong{display:block;margin-top:8px}.drop small{display:block;color:var(--muted);margin-top:4px}.drop input{display:none}.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}.btn{border:0;border-radius:12px;padding:11px 16px;background:var(--accent);color:#081226;font-weight:750;cursor:pointer}.btn:disabled{opacity:.5;cursor:not-allowed}.secondary{background:#263650;color:var(--text)}.status{font-size:13px;color:var(--muted);min-height:20px;margin-top:10px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:13px}.photo{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden;min-width:0}.photo img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;background:#0a1020;cursor:zoom-in}.meta{padding:10px 11px}.filename{font-size:13px;overflow-wrap:anywhere;font-weight:650}.date{font-size:12px;color:var(--muted);margin-top:3px}.empty{border:1px dashed var(--line);border-radius:16px;padding:34px 16px;text-align:center;color:var(--muted);grid-column:1/-1}.foot{margin-top:26px;text-align:center;color:#73829a;font-size:12px}.viewer{position:fixed;inset:0;background:#000e;display:none;align-items:center;justify-content:center;padding:20px;z-index:10}.viewer.open{display:flex}.viewer img{max-width:95vw;max-height:88vh;object-fit:contain}.close{position:absolute;top:16px;right:18px;border:0;border-radius:50%;width:42px;height:42px;background:#fff;color:#111;font-size:25px;cursor:pointer}
-    @media(max-width:480px){.wrap{padding:20px 12px 40px}.panel{padding:14px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.top{align-items:flex-start}.count{padding-top:9px}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BURONAN</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #1e293b;
+    text-align: center; /* SEMUA TULISAN RATA TENGAH */
+}
+
+header {
+    background: #2563eb;
+    color: white;
+    padding: 25px 15px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0 0 8px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+/* 🟢 FOTO UTAMA: GANTI NAMA FILE DI SINI */
+
+.foto-saya {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    margin: 20px auto;
+    border-radius: 10px;
+}
+
+/* 🔴 AKHIR FOTO UTAMA */
+
+.upload {
+    background: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 12px;
+    margin: 20px 0;
+}
+
+input[type="file"] {
+    display: block;
+    margin: 12px auto;
+    max-width: 100%;
+    text-align: center;
+}
+
+button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 7px;
+    cursor: pointer;
+    text-align: center;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+/* 🟢 GALERI FOTO */
+
+.galeri {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+    align-items: start;
+}
+
+.kartu {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.kartu img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 7px;
+    cursor: pointer;
+    margin: auto;
+}
+
+.kartu p {
+    text-align: center;
+    overflow-wrap: anywhere;
+    margin: 12px 0;
+}
+
+.hapus {
+    background: #dc2626;
+}
+
+#status {
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+/* FOTO UKURAN BESAR */
+
+#viewer {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #000e;
+    z-index: 10;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+#viewer img {
+    max-width: 100%;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+#viewer button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+</style>
 </head>
+
 <body>
-  <main class="wrap">
-    <header class="top"><div class="brand"><div class="logo">▧</div><div><div class="eyebrow">Galeri komunitas</div><h1 class="title">Galeri Foto Bersama</h1></div></div><div class="count" id="count">Memuat foto…</div></header>
-    <section class="panel">
-      <h2>Upload foto</h2><p class="sub">Foto akan disimpan di server pemilik galeri dan dapat dilihat pengunjung lain.</p>
-      <label class="drop" for="files"><span style="font-size:30px">＋</span><strong>Pilih foto dari perangkat</strong><small>JPG, PNG, GIF, WEBP · Maks. 10 MB per foto · Hingga 10 foto sekali upload</small><input id="files" type="file" accept="image/jpeg,image/png,image/gif,image/webp,image/avif" multiple></label>
-      <div class="actions"><button id="uploadBtn" class="btn" disabled>Upload foto</button><button id="refreshBtn" class="btn secondary" type="button">Muat ulang galeri</button><span id="selected" class="count"></span></div><div id="status" class="status" role="status"></div>
-    </section>
-    <section><h2 style="font-size:19px;margin:0 0 4px">Foto terbaru</h2><p class="sub">Foto yang tersimpan di server akan tampil di sini untuk semua pengunjung.</p><div id="gallery" class="grid"><div class="empty">Sedang memuat galeri…</div></div></section>
-    <footer class="foot">Foto disimpan pada server galeri. Jangan unggah foto pribadi atau sensitif.</footer>
-  </main>
-  <div id="viewer" class="viewer" role="dialog" aria-label="Pratinjau foto"><button class="close" id="closeViewer" aria-label="Tutup">×</button><img id="viewerImg" alt="Pratinjau foto"></div>
+
+<header>
+    <h1>DI CARI BURONAN PENCURI SEMPAK</h1>
+    <p>BERIKUT FOTO PELAKU</p>
+</header>
+
+<div class="container">
+
+    <!-- 🟢 PENANDA 1: GANTI FOTO UTAMA DI SINI -->
+    <!-- Ganti foto-saya.jpg dengan nama file fotomu -->
+
+    <h2>FOTO PELAKU</h2>
+
+    <img
+        class="foto-saya"
+        src="WhatsApp Image 2026-10-17 at 14.45.10.jpeg"
+        alt="FOTO PELAKU PENCURI SEMPAK"
+    >
+    </div>
+
+    <h2>FOTO PELAKU</h2>
+
+    <img
+        class="foto-saya"
+        src="WhatsApp Image 2026-10-17 at 14.45.11.jpeg"
+        alt="FOTO PELAKU PENCURI SEMPAK"
+    >
+    </div>
+</div>
+
+<div id="viewer" onclick="tutupFoto()">
+    <button onclick="tutupFoto()">Tutup ✕</button>
+    <img id="fotoBesar" alt="Foto ukuran besar">
+</div>
+
 <script>
-  // API relatif ke server yang sama. Tidak perlu mengubah alamat jika server.js dijalankan bersama file ini.
-  const API = '';
-  const fileInput = document.getElementById('files');
-  const uploadBtn = document.getElementById('uploadBtn');
-  const selected = document.getElementById('selected');
-  const statusBox = document.getElementById('status');
-  const gallery = document.getElementById('gallery');
-  const count = document.getElementById('count');
-  const allowed = ['image/jpeg','image/png','image/gif','image/webp','image/avif'];
+function tambahFoto() {
+    const input = document.getElementById("pilihFoto");
+    const status = document.getElementById("status");
 
-  fileInput.addEventListener('change', () => {
-    const files = [...fileInput.files];
-    const valid = files.length > 0 && files.length <= 10 && files.every(f => allowed.includes(f.type) && f.size <= 10*1024*1024);
-    uploadBtn.disabled = !valid;
-    selected.textContent = files.length ? `${files.length} foto dipilih` : '';
-    statusBox.textContent = files.length && !valid ? 'Pilih maksimal 10 foto yang didukung, masing-masing tidak lebih dari 10 MB.' : '';
-  });
+    if (!input.files.length) {
+        alert("Pilih foto terlebih dahulu!");
+        return;
+    }
 
-  uploadBtn.addEventListener('click', async () => {
-    const files = [...fileInput.files];
-    if (!files.length) return;
-    const body = new FormData(); files.forEach(file => body.append('photos', file));
-    uploadBtn.disabled = true; statusBox.textContent = 'Mengunggah foto…';
-    try {
-      const response = await fetch(`${API}/api/upload`, {method:'POST', body});
-      const result = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(result.error || 'Upload gagal. Periksa server.');
-      statusBox.textContent = `${result.uploaded ?? files.length} foto berhasil disimpan.`;
-      fileInput.value = ''; selected.textContent = ''; await loadGallery();
-    } catch (error) { statusBox.textContent = error.message || 'Tidak dapat terhubung ke server.'; }
-    finally { uploadBtn.disabled = !fileInput.files.length; }
-  });
+    const file = input.files[0];
 
-  document.getElementById('refreshBtn').addEventListener('click', loadGallery);
-  async function loadGallery() {
-    count.textContent = 'Memuat…';
-    try {
-      const response = await fetch(`${API}/api/images`, {cache:'no-store'});
-      if (!response.ok) throw new Error('Gagal mengambil foto');
-      const data = await response.json();
-      const photos = Array.isArray(data) ? data : data.images || [];
-      count.textContent = `${photos.length} foto`;
-      gallery.replaceChildren();
-      if (!photos.length) { gallery.innerHTML = '<div class="empty">Belum ada foto. Jadilah yang pertama mengunggah!</div>'; return; }
-      photos.forEach(photo => {
-        const card = document.createElement('article'); card.className = 'photo';
-        const img = document.createElement('img'); img.loading = 'lazy'; img.alt = photo.original_name || photo.filename || 'Foto galeri';
-        img.src = photo.url || `/uploads/${encodeURIComponent(photo.filename)}`;
-        img.addEventListener('click', () => { document.getElementById('viewerImg').src = img.src; document.getElementById('viewer').classList.add('open'); });
-        const meta = document.createElement('div'); meta.className = 'meta';
-        const name = document.createElement('div'); name.className = 'filename'; name.textContent = photo.original_name || photo.filename || 'Foto';
-        const date = document.createElement('div'); date.className = 'date';
-        if (photo.created_at || photo.uploaded_at) { const d = new Date(photo.created_at || photo.uploaded_at); date.textContent = isNaN(d) ? '' : d.toLocaleString('id-ID'); }
-        meta.append(name,date); card.append(img,meta); gallery.append(card);
-      });
-    } catch (error) { count.textContent = 'Server tidak terhubung'; gallery.innerHTML = '<div class="empty">Galeri belum dapat dimuat. Pastikan server berjalan dengan perintah <b>npm start</b>, lalu muat ulang halaman.</div>'; }
-  }
-  function closeViewer(){document.getElementById('viewer').classList.remove('open');document.getElementById('viewerImg').src='';}
-  document.getElementById('closeViewer').addEventListener('click',closeViewer);
-  document.getElementById('viewer').addEventListener('click',e=>{if(e.target.id==='viewer')closeViewer();});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeViewer();});
-  loadGallery();
+    if (!file.type.startsWith("image/")) {
+        alert("File harus berupa gambar!");
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+        const kartu = document.createElement("div");
+        kartu.className = "kartu";
+
+        const img = document.createElement("img");
+        img.src = event.target.result;
+        img.alt = file.name;
+        img.onclick = function() {
+            bukaFoto(img.src);
+        };
+
+        const nama = document.createElement("p");
+        nama.textContent = file.name;
+
+        kartu.appendChild(img);
+        kartu.appendChild(nama);
+
+        document.getElementById("galeri").appendChild(kartu);
+
+        status.textContent = "Foto berhasil ditambahkan!";
+        input.value = "";
+    };
+
+    reader.readAsDataURL(file);
+}
+
+function bukaFoto(src) {
+    document.getElementById("fotoBesar").src = src;
+    document.getElementById("viewer").style.display = "flex";
+}
+
+function tutupFoto() {
+    document.getElementById("viewer").style.display = "none";
+}
 </script>
+
 </body>
 </html>
