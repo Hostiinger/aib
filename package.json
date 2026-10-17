@@ -1,0 +1,10 @@
+{
+  "name": "galeri-server-sendiri",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Galeri foto dengan penyimpanan lokal dan database SQLite milik sendiri",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=20" },
+  "dependencies": { "better-sqlite3": "^11.8.1", "express": "^4.21.2", "multer": "^1.4.5-lts.2" }
+}
