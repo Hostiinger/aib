@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111027">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Galeri Upload Gambar</title>
+<style>
+:root{--bg:#111027;--panel:rgba(255,255,255,.075);--line:rgba(255,255,255,.16);--text:#f6f5ff;--muted:#b8b5d6;--a:#8265ff;--b:#00d9ef}
+*{box-sizing:border-box}html{min-height:100%;background:var(--bg)}body{margin:0;min-height:100vh;min-height:100dvh;color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(circle at 10% 0%,#302760,transparent 38%),radial-gradient(circle at 90% 100%,#07506a,transparent 36%),var(--bg);-webkit-text-size-adjust:100%}
+main{width:100%;max-width:760px;margin:0 auto;padding:calc(16px + env(safe-area-inset-top)) 14px calc(26px + env(safe-area-inset-bottom))}
+header{text-align:center;padding:12px 0 20px}.badge{display:inline-block;border:1px solid var(--line);background:var(--panel);border-radius:30px;padding:6px 12px;color:var(--b);font-size:.72rem;letter-spacing:.07em}h1{font-size:clamp(1.8rem,8vw,2.6rem);line-height:1.1;margin:13px 0 9px;letter-spacing:-.04em}header p,.muted{color:var(--muted)}header p{font-size:.94rem;line-height:1.5;margin:0 auto;max-width:34rem}
+.panel{border:1px solid var(--line);background:var(--panel);border-radius:22px;padding:13px;backdrop-filter:blur(12px)}
+.drop{min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:11px;border:2px dashed #7d75b5;border-radius:17px;padding:20px 14px;cursor:pointer;touch-action:manipulation}.drop.drag{border-color:var(--b);background:#00d9ef12}.upload-icon{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--a),var(--b));font-size:27px}.drop h2{font-size:1.08rem;line-height:1.35;margin:0}.muted{font-size:.87rem;line-height:1.45}.btn{border:0;border-radius:30px;padding:13px 18px;min-height:44px;font-size:.95rem;font-weight:750;cursor:pointer;color:white;background:linear-gradient(120deg,var(--a),#168cae);touch-action:manipulation}.btn:disabled{opacity:.5;cursor:wait}.row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:15px 0}.row .muted{flex:1;min-width:130px}.status{color:var(--muted);font-size:.88rem;line-height:1.45;min-height:1.4em;overflow-wrap:anywhere}.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}.card{min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:#ffffff0a}.card img{width:100%;aspect-ratio:1;object-fit:cover;display:block;cursor:zoom-in}.card .meta{padding:9px;font-size:.75rem;line-height:1.4;overflow-wrap:anywhere}.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:25px 12px;border:1px dashed var(--line);border-radius:14px;font-size:.9rem}.foot{font-size:.75rem;color:var(--muted);text-align:center;margin-top:20px;line-height:1.5}.lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#000e;padding:12px;z-index:5}.lightbox.show{display:flex}.lightbox img{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px}
+@media(min-width:560px){main{padding-left:22px;padding-right:22px}.panel{padding:18px}.drop{min-height:220px}.gallery{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}}
+/* Saat HP diputar landscape: gunakan ruang lebar tanpa mengunci rotasi perangkat. */
+@media(max-height:500px) and (orientation:landscape){main{max-width:1000px;padding-top:10px}.header{padding-top:4px}header{padding:4px 0 12px}h1{font-size:1.8rem;margin:8px 0}header p{font-size:.85rem}.drop{min-height:135px;gap:7px}.upload-icon{width:42px;height:42px;font-size:22px}.gallery{grid-template-columns:repeat(4,minmax(0,1fr))}.panel{padding:10px}}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <span class="badge">GALERI BERSAMA • ONLINE</span>
+  <h1>Unggah Gambar Kamu</h1>
+  <p>Pilih gambar dari HP kamu. Gambar yang berhasil diunggah akan muncul untuk semua pengunjung.</p>
+</header>
+<section class="panel">
+  <label class="drop" id="dropzone" for="fileInput">
+    <div class="upload-icon">↑</div>
+    <h2>Ketuk untuk memilih gambar</h2>
+    <span class="muted">JPG, PNG, GIF, WEBP • Maksimal 10 MB per gambar</span>
+    <span class="btn">Pilih Gambar</span>
+    <input id="fileInput" type="file" accept="image/jpeg,image/png,image/gif,image/webp,image/avif" multiple hidden>
+  </label>
+  <div class="row">
+    <span id="selectedCount" class="muted">Belum ada gambar yang dipilih</span>
+    <button id="uploadBtn" class="btn" disabled>Unggah Sekarang</button>
+  </div>
+  <div id="status" class="status" role="status" aria-live="polite">Memeriksa pengaturan penyimpanan…</div>
+  <p class="muted" style="margin:13px 2px 2px">Galeri ini publik. Siapa pun yang membuka tautan dapat melihat gambar yang diunggah. Jangan unggah foto pribadi atau dokumen sensitif.</p>
+</section>
+<div class="row"><div><h2 style="font-size:1.25rem;margin:0">Galeri bersama</h2><span class="muted">Gambar terbaru lebih dulu</span></div><button id="refreshBtn" class="btn" type="button">Muat ulang</button></div>
+<section id="gallery" class="gallery"><div class="empty">Galeri akan muncul setelah konfigurasi selesai.</div></section>
+<p class="foot">Galeri Upload Gambar • Tampilan khusus HP, menyesuaikan saat layar diputar</p>
+</main>
+<div class="lightbox" id="lightbox"><img alt="Pratinjau gambar ukuran penuh"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// Isi kedua nilai ini dari Supabase Project Settings > API.
+// Gunakan publishable/anon public key, JANGAN service_role atau secret key.
+const SUPABASE_URL = "MASUKKAN_SUPABASE_PROJECT_URL";
+const SUPABASE_ANON_KEY = "MASUKKAN_SUPABASE_PUBLISHABLE_ANON_KEY";
+const BUCKET = "shared-images";
+const MAX_SIZE = 10 * 1024 * 1024;
+const MAX_FILES_PER_BATCH = 20;
+const $ = id => document.getElementById(id);
+const input = $("fileInput"), drop = $("dropzone"), uploadBtn = $("uploadBtn");
+const statusEl = $("status"), gallery = $("gallery"), selectedCount = $("selectedCount");
+let selectedFiles = [], client = null;
+function say(message, isError=false){statusEl.textContent=message;statusEl.style.color=isError?"#ff9eaa":""}
+function validConfig(){return SUPABASE_URL.startsWith("https://")&&!SUPABASE_URL.includes("MASUKKAN_")&&SUPABASE_ANON_KEY.length>20&&!SUPABASE_ANON_KEY.includes("MASUKKAN_")}
+function fileSize(n){return n<1024*1024?(n/1024).toFixed(0)+" KB":(n/1024/1024).toFixed(2)+" MB"}
+function updateSelected(){selectedCount.textContent=selectedFiles.length?selectedFiles.length+" gambar siap diunggah":"Belum ada gambar yang dipilih";uploadBtn.disabled=!client||!selectedFiles.length}
+function addFiles(list){let rejected=0;for(const file of Array.from(list||[])){if(!file.type.startsWith("image/")||file.size>MAX_SIZE||selectedFiles.length>=MAX_FILES_PER_BATCH){rejected++;continue}selectedFiles.push(file)}updateSelected();if(rejected)say(rejected+" file dilewati. Pastikan format gambar, ukuran maksimal 10 MB, dan maksimal 20 file sekali unggah.",true);else if(selectedFiles.length)say("Siap diunggah. Tekan tombol Unggah Sekarang.")}
+input.addEventListener("change",()=>{addFiles(input.files);input.value=""});
+for(const ev of ["dragenter","dragover"])drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("drag")});
+for(const ev of ["dragleave","drop"])drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("drag")});
+drop.addEventListener("drop",e=>addFiles(e.dataTransfer.files));
+async function loadGallery(){if(!client)return;gallery.innerHTML='<div class="empty">Memuat gambar…</div>';const {data,error}=await client.storage.from(BUCKET).list("",{limit:100,offset:0,sortBy:{column:"created_at",order:"desc"}});if(error){gallery.innerHTML='<div class="empty">Galeri belum dapat dimuat. Periksa bucket dan kebijakan Storage.</div>';say("Gagal memuat galeri: "+error.message,true);return}const images=(data||[]).filter(x=>x.name&&!x.name.startsWith(".")&&x.id);gallery.innerHTML="";if(!images.length){gallery.innerHTML='<div class="empty">Belum ada gambar. Jadilah yang pertama mengunggah!</div>';say("Terhubung. Belum ada gambar.");return}for(const item of images){const {data:u}=client.storage.from(BUCKET).getPublicUrl(item.name);const card=document.createElement("article");card.className="card";const img=document.createElement("img");img.loading="lazy";img.src=u.publicUrl;img.alt=item.name;img.addEventListener("click",()=>{$("lightbox").querySelector("img").src=img.src;$("lightbox").classList.add("show")});const meta=document.createElement("div");meta.className="meta";meta.textContent=item.name.replace(/^\d+-/,"")+(item.metadata&&item.metadata.size?" · "+fileSize(item.metadata.size):"");card.append(img,meta);gallery.append(card)}say("Terhubung. "+images.length+" gambar ditampilkan (maksimal 100 terbaru).")}
+uploadBtn.addEventListener("click",async()=>{if(!client||!selectedFiles.length)return;uploadBtn.disabled=true;let done=0,failed=0;for(const file of selectedFiles){const safe=file.name.replace(/[^a-zA-Z0-9._-]/g,"_").slice(-100)||"gambar";const path=Date.now()+"-"+crypto.randomUUID()+"-"+safe;say("Mengunggah "+(done+failed+1)+" dari "+selectedFiles.length+"…");const {error}=await client.storage.from(BUCKET).upload(path,file,{cacheControl:"3600",contentType:file.type,upsert:false});if(error){failed++;console.error(error)}else done++}selectedFiles=[];updateSelected();if(failed)say("Selesai sebagian: "+done+" berhasil, "+failed+" gagal. Periksa kebijakan Storage atau kuota.",true);else say("Berhasil! "+done+" gambar tersimpan online.");await loadGallery()});
+$("refreshBtn").addEventListener("click",loadGallery);$("lightbox").addEventListener("click",()=>$("lightbox").classList.remove("show"));document.addEventListener("keydown",e=>{if(e.key==="Escape")$("lightbox").classList.remove("show")});
+if(!validConfig()){say("Website belum tersambung. Ikuti PANDUAN-SETUP.md lalu isi URL dan key Supabase di index.html.",true);gallery.innerHTML='<div class="empty">Konfigurasi Supabase diperlukan sebelum galeri digunakan.</div>'}else{try{client=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);say("Memuat galeri…");updateSelected();loadGallery()}catch(e){say("Gagal menginisialisasi Supabase. Periksa URL dan key.",true)}}
+</script>
+</body>
+</html>
